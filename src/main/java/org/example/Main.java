@@ -8,11 +8,12 @@ public class Main{
         // declare scanner object
         Scanner scannerObj = new Scanner(System.in);
 
-        //  declare 2 Arraylists to store students name, grades, grades count
-        ArrayList<String> studentsName = new ArrayList<>();
-        ArrayList<Integer> studentsGrade = new ArrayList<>();
-        ArrayList<Character> gradesCount = new ArrayList<>();
+        //  declare 3 Arraylists to store students name, grades, grades count
+        ArrayList<String> studentsName = new ArrayList<>(); //  will store all students name
+        ArrayList<Integer> studentsGrade = new ArrayList<>(); //    store all students grade (numerical)
+        ArrayList<Character> gradesCount = new ArrayList<>(); //    store all grades (A, B, C...etc)
 
+        //  number of students input
         System.out.print("Enter number of students: ");
         int numberStudentInput = scannerObj.nextInt();
 
@@ -31,6 +32,7 @@ public class Main{
             System.out.println(studentNameInput + " got grade: " + calculateScore(studentScoreInput, gradesCount));
         }
 
+        //  class summary output
         System.out.println("\n----- Class Summary -----");
         System.out.printf("Average Score: %,.2f", calculateAverage(studentsGrade));
         System.out.println("\nGrade Counts: " + getGradesCount(gradesCount));
@@ -42,12 +44,19 @@ public class Main{
     }
 
     public static String getHighestStudent(ArrayList<String> studentsName, ArrayList<Integer> studentsGrade) {
+        //  get the highest value of students grade
         int highestGrade = Collections.max(studentsGrade);
 
-        //  get the highest grade in gradesCount in the last element after sort
+        /*
+            Since both ArrayList of students grade and name have the same indexes:
+                1. We want to get the highest grade in studentsGrade ArrayList (stored in highestGrade)
+                2. Get the index of highest grade in studentsGrade ArrayList
+                3. Get the name of the student with highest grade based on the index of the highest grade from highestGradeIndex
+         */
         int highestGradeIndex = studentsGrade.indexOf(highestGrade);
         String highestStudent = studentsName.get(highestGradeIndex);
 
+        //  return formatted string with student's highest grade and name
         return String.format("%s (%s)", highestStudent, highestGrade);
 
     }
@@ -83,6 +92,7 @@ public class Main{
             }
         }
 
+        //  return formatted string of the grades compilation
         return String.format("A:%s B:%s C:%s D:%s F:%s" , countGradesA, countGradesB, countGradesC, countGradesD, countGradesF);
     }
 
@@ -90,15 +100,18 @@ public class Main{
     public static float calculateAverage(ArrayList<Integer> grades) {
         float sumGrades = 0;
 
+        //  enhanced for loop to get the sum of all grades
         for (Integer grade : grades) {
             sumGrades = grade + sumGrades;
         }
 
+        //  get sum of all grades & divide to the total count of all grades (grades.size()) to get the average
         return sumGrades / grades.size();
     }
 
     //  method to calculate score of student
     public static char calculateScore(float score, ArrayList<Character> gradesCount) {
+        //  return the score based on student's grade
         if (score >= 90 && score <= 100) {
             gradesCount.add('A');
             return 'A';
